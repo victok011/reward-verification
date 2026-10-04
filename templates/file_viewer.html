@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block title %}{{ filepath }} — {{ season }}{% endblock %}
+
+{% block sidebar %}
+  <a href="/season/{{ season }}" class="active">{{ season }}</a>
+{% endblock %}
+
+{% block content %}
+  <div class="breadcrumb">
+    <a href="/">Home</a> / <a href="/season/{{ season }}">{{ season }}</a> / {{ filepath }}
+  </div>
+
+  <h1 style="font-size:22px;margin-bottom:16px;">{{ filepath }}</h1>
+
+  {% if truncated %}
+    <div class="notice">⚠️ File truncated at 200 KB.</div>
+  {% endif %}
+
+  {% if rendered %}
+    <div class="markdown">{{ content | safe }}</div>
+  {% else %}
+    <pre class="code-block">{{ content }}</pre>
+  {% endif %}
+{% endblock %}

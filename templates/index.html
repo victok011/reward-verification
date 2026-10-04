@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block title %}Silencio Raffle Verification{% endblock %}
+
+{% block content %}
+  <h1 style="font-size:28px;margin-bottom:8px;">Silencio Raffle Verification</h1>
+  <p style="color:var(--text-dim);margin-bottom:28px;max-width:600px;">
+    Independent verification files for each Silencio Raffle Season, including the
+    initial Beta Airdrop. Each subdirectory contains the data, scripts, and
+    documentation needed to audit the raffle results.
+  </p>
+
+  <div class="grid">
+    {% for s in seasons %}
+      <a href="/season/{{ s.name }}" style="text-decoration:none;color:inherit;">
+        <div class="card">
+          <h3>{{ s.title }}</h3>
+          <div class="meta">
+            <code>{{ s.name }}</code><br>
+            {% if s.has_results %}
+              <span class="badge">{{ s.result_count }} result file{{ 's' if s.result_count != 1 else '' }}</span>
+            {% else %}
+              <span class="badge" style="color:var(--text-dim);">No results yet</span>
+            {% endif %}
+          </div>
+        </div>
+      </a>
+    {% endfor %}
+  </div>
+{% endblock %}

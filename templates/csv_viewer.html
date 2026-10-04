@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+{% block title %}{{ filepath }} — {{ season }}{% endblock %}
+
+{% block sidebar %}
+  {% for s in all_seasons | default([season]) %}
+    <a href="/season/{{ s }}" {% if s == season %}class="active"{% endif %}>{{ s }}</a>
+  {% endfor %}
+{% endblock %}
+
+{% block content %}
+  <div class="breadcrumb">
+    <a href="/">Home</a> / <a href="/season/{{ season }}">{{ season }}</a> / {{ filepath }}
+  </div>
+
+  <h1 style="font-size:22px;margin-bottom:8px;">{{ filepath }}</h1>
+  <p style="color:var(--text-dim);font-size:13px;margin-bottom:16px;">
+    {{ total_rows }} rows · {{ file_size_mb }} MB
+  </p>
+
+  {% if truncated %}
+    <div class="notice">
+      ⚠️ This file is large ({{ file_size_mb }} MB). Showing the first 5,000 rows only.
+    </div>
+  {% endif %}
+
+  <div class="pagination">
+    {% if page > 1 %}
+      <a href="?page={{ page - 1 }}">← Prev</a>
+    {% endif %}
+    <span class="current">Page {{ page }} of {{ total_pages }}</span>
+    {% if page < total_pages %}
+      <a href="?page={{ page + 1 }}">Next →</a>
+    {% endif %}
+  </div>
+
+  <div class="table-wrap">
+    <table class="csv-table">
+      <thead>
+        <tr>
+          {% for col in columns %}
+            <th>{{ col }}</th>
+          {% endfor %}
+        </tr>
+      </thead>
+      <tbody>
+        {% for row in rows %}
+          <tr>
+            {% for cell in row %}
+              <td>{{ cell }}</td>
+            {% endfor %}
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+  <div class="pagination">
+    {% if page > 1 %}
+      <a href="?page={{ page - 1 }}">← Prev</a>
+    {% endif %}
+    <span class="current">Page {{ page }} of {{ total_pages }}</span>
+    {% if page < total_pages %}
+      <a href="?page={{ page + 1 }}">Next →</a>
+    {% endif %}
+  </div>
+{% endblock %}

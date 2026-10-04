@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+{% block title %}{{ title }} — Silencio Raffle{% endblock %}
+
+{% block sidebar %}
+  {% for s in all_seasons %}
+    <a href="/season/{{ s }}" {% if s == season %}class="active"{% endif %}>{{ s }}</a>
+  {% endfor %}
+{% endblock %}
+
+{% block content %}
+  <div class="breadcrumb">
+    <a href="/">Home</a> / {{ season }}
+  </div>
+  <h1 style="font-size:28px;margin-bottom:24px;">{{ title }}</h1>
+
+  {% if readme_html %}
+    <div class="markdown">{{ readme_html | safe }}</div>
+  {% endif %}
+
+  {% if files.results %}
+    <div class="file-section">
+      <h3>📊 Raffle Results</h3>
+      <ul class="file-list">
+        {% for f in files.results %}
+          <li>📄 <a href="/season/{{ season }}/csv/{{ f }}">{{ f }}</a></li>
+        {% endfor %}
+      </ul>
+    </div>
+  {% endif %}
+
+  {% if files.assignments %}
+    <div class="file-section">
+      <h3>🏆 Token / Prize Assignments</h3>
+      <ul class="file-list">
+        {% for f in files.assignments %}
+          <li>📄 <a href="/season/{{ season }}/csv/{{ f }}">{{ f }}</a></li>
+        {% endfor %}
+      </ul>
+    </div>
+  {% endif %}
+
+  {% if files.data %}
+    <div class="file-section">
+      <h3>📈 Data Files</h3>
+      <ul class="file-list">
+        {% for f in files.data %}
+          <li>📄 <a href="/season/{{ season }}/csv/{{ f }}">{{ f }}</a></li>
+        {% endfor %}
+      </ul>
+    </div>
+  {% endif %}
+
+  {% if files.scripts %}
+    <div class="file-section">
+      <h3>🐍 Verification Scripts</h3>
+      <ul class="file-list">
+        {% for f in files.scripts %}
+          <li>🐍 <a href="/season/{{ season }}/file/{{ f }}">{{ f }}</a></li>
+        {% endfor %}
+      </ul>
+    </div>
+  {% endif %}
+
+  {% if files.hashes %}
+    <div class="file-section">
+      <h3>🔐 Hash Verification Files</h3>
+      <ul class="file-list">
+        {% for f in files.hashes %}
+          <li>🔐 <a href="/season/{{ season }}/file/{{ f }}">{{ f }}</a></li>
+        {% endfor %}
+      </ul>
+    </div>
+  {% endif %}
+
+  {% if files.images %}
+    <div class="file-section">
+      <h3>🖼️ Images</h3>
+      <ul class="file-list">
+        {% for f in files.images %}
+          <li>🖼️ {{ f }}</li>
+        {% endfor %}
+      </ul>
+    </div>
+  {% endif %}
+{% endblock %}
